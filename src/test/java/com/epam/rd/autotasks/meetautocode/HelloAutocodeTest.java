@@ -1,11 +1,12 @@
 package com.epam.rd.autotasks.meetautocode;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 public class HelloAutocodeTest {
 
@@ -18,11 +19,13 @@ public class HelloAutocodeTest {
 
         System.setOut(controlledOut);
 
-        HelloAutocode.main(new String[]{});
-
-        controlledOut.flush();
-        assertEquals("Hello, Autocode!", sink.toString().trim());
-
-        System.setOut(defaultOut);
+        try {
+            HelloAutocode.main(new String[]{});
+            controlledOut.flush();
+            final String actual = sink.toString().trim();
+            assertEquals("Hello, Autocode!", actual, "Your program must print \"Hello, Autocode!\" but printed \"" + actual + "\" instead.");
+        } finally {
+            System.setOut(defaultOut);
+        }
     }
 }
